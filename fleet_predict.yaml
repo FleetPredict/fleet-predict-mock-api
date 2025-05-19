@@ -14,10 +14,14 @@ servers:
   - url: http://localhost:4000
     description: Local development server
 
+security:
+  - bearerAuth: []
+
 paths:
   /:
     get:
       summary: Health check endpoint
+      security: []
       description: >-
         This endpoint allows a user of the FleetPredict Backend Servic to check the
         outbound transfers service is listening.
@@ -29,6 +33,57 @@ paths:
             Returns empty body if the scheme adapter outbound transfers service
             is running.
   
+  /auth/register:
+    post:
+      summary: Register a new passenger
+      security: []
+      tags: [Authentication]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Register'
+      responses:
+        "200":
+          description: User registered successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegisterResponse'
+        "400":
+          description: Invalid registration data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /auth/login:
+    post:
+      summary: Login with username and password
+      security: []
+      tags: [Authentication]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Login'
+      responses:
+        "200":
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+        "400":
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+
   /user:
     get:
       summary: Retrieve all users
@@ -1251,7 +1306,7 @@ components:
           example: 1200
         message:
           type: string
-          example: Bus Data
+          example: Success
         data:
           type: object
 
@@ -1573,6 +1628,63 @@ components:
           type: number
           format: float
           example: 12000.0
+    
+    Register:
+      type: object
+      properties:
+        first_name:
+          type: string
+          example: "Chimweso"
+        last_name:
+          type: string
+          example: "Faith"
+        email:
+          type: string
+          example: "chimwesofaith@gmail.com"
+        password:
+          type: string
+          example: "password123"
+        phone_number:
+          type: string
+          example: "+260123456789"
+        address:
+          type: string
+          example: "123 Main St, Lusaka, Zambia"
+        date_of_birth:
+          type: string
+          format: date
+          example: "1990-01-01"
+        id_type:
+          type: string
+          enum:
+            - NRC
+            - PASSPORT
+            - DRIVER_LICENSE
+          example: "NRC"
+        id_value:
+          type: string
+          example: "667923/12/1"
+        id_front_image:
+          type: string
+          example: "https://example.com/id_front.jpg"
+        id_back_image:
+          type: string
+          example: "https://example.com/id_back.jpg"
+        profile_picture:
+          type: string
+          example: "https://example.com/profile.jpg"
+
+    Login:
+      type: object
+      properties:
+        username:
+          type: string
+          example: "chimweso12"
+        password:
+          type: string
+          example: "password123"
+        
+
 
     # Entity Responses
 
@@ -1656,4 +1768,26 @@ components:
             data:
               $ref: '#/components/schemas/CompanyAccount'
 
+    RegisterResponse:
+      allOf:
+        - $ref: '#/components/schemas/ApiResponse'
+        - type: object
+          properties:
+            data:
+              $ref: '#/components/schemas/Register'
+
+    LoginResponse:
+      allOf:
+        - $ref: '#/components/schemas/ApiResponse'
+        - type: object
+          properties:
+            data:
+              $ref: '#/components/schemas/Login'
+
+    # Security
+  securitySchemes:
+    bearerAuth: 
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
 
