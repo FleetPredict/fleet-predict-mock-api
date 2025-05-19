@@ -33,6 +33,8 @@ Use a Rest client like [Postman](https://www.postman.com/downloads/) to test the
 ```
 http://localhost:4000/bus
 ```
+### Note
+When testing include a bearer token on auth type in the authorization tab.
 
 To stop the server press 
 
