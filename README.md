@@ -33,8 +33,16 @@ Use a Rest client like [Postman](https://www.postman.com/downloads/) to test the
 ```
 http://localhost:4000/bus
 ```
-### Note
+### Note 1
 When testing include a bearer token on auth type in the authorization tab.
+
+### Note 2
+
+To test and not worry about security, checkout in branch 'ft/no-security' to test without the need of a bearer token
+```bash
+git fetch
+git checkout ft/no-security
+```
 
 To stop the server press 
 
