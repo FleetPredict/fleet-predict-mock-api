@@ -1313,7 +1313,7 @@ components:
         id:
           type: string
           example: "12"
-        registration_integer:
+        number_plate:
           type: string
           example: "ABC1234"
         capacity:
@@ -1338,13 +1338,13 @@ components:
     BusCreateRequest:
       type: object
       required:
-        - registration_integer
+        - number_plate
         - capacity
         - assigned_driver_id
         - assigned_conductor_id
         - route_id
       properties:
-        registration_integer:
+        number_plate:
           type: string
           example: "ABC1234"
         capacity:
