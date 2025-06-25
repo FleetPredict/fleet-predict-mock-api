@@ -1325,7 +1325,7 @@ components:
         assigned_conductor_id:
           type: integer
           example: 1
-        bus_integer:
+        bus_id:
           type: string
           example: "BUS123"
         route_id:
