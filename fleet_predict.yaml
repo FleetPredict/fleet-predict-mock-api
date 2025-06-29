@@ -640,7 +640,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Location'
+              $ref: '#/components/schemas/LocationCreateRequest'
       responses:
         "200":
           description: Location created successfully
@@ -1398,7 +1398,29 @@ components:
           type: number
           format: float
           example: -122.4194
-        bus_station_name:
+        busStationName:
+          type: string
+          example: "InterCity Bus Station"
+
+    LocationCreateRequest:
+      type: object
+      required:
+        - name
+        - latitude
+        - longitude
+      properties:
+        name:
+          type: string
+          example: "Lusaka"
+        latitude:
+          type: number
+          format: float
+          example: 37.7749
+        longitude:
+          type: number
+          format: float
+          example: -122.4194
+        busStationName:
           type: string
           example: "InterCity Bus Station"
     
