@@ -768,7 +768,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Route'
+              $ref: '#/components/schemas/RouteCreateRequest'
       responses:
         "200":
           description: Route created
@@ -806,36 +806,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-
-    put:
-      summary: Update a route
-      tags: [Route]
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: integer
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Route'
-      responses:
-        "200":
-          description: Route updated
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RouteResponse'
-        "400":
-          description: Invalid update
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-
     delete:
       summary: Delete a route
       tags: [Route]
@@ -1430,27 +1400,24 @@ components:
         id:
           type: integer
           example: 1
-        start_location_id:
-          type: integer
-          example: 1
-        end_location_id:
-          type: integer
-          example: 2
+        startLocation:
+          $ref: '#/components/schemas/Location'
+        endLocation:
+          $ref: '#/components/schemas/Location'
+        routeName:
+          type: string
+          example: "Lusaka - Kitwe"
         distance:
           type: number
           format: float
           example: 100.5
         duration:
-          type: string
-          example: "2 hours"
+          type: number
+          example: 34
         fare:
           type: number
           format: float
           example: 12.50
-        stops:
-          type: array
-          items:
-            $ref: '#/components/schemas/Location'
       required:
         - id
         - start_location_id
@@ -1460,6 +1427,15 @@ components:
         - fare
         - stops
 
+    RouteCreateRequest:
+      type: object
+      properties:  
+        startLocationId:
+          type: integer
+          example: 1
+        endLocationId:
+          type: integer
+          example: 2
 
     TransactionLedger:
       type: object
