@@ -1185,10 +1185,10 @@ components:
         id:
           type: integer
           example: 1
-        first_name:
+        firstName:
           type: string
           example: "Chimweso"
-        last_name:
+        lastName:
           type: string
           example: "Faith"
         email:
@@ -1283,73 +1283,44 @@ components:
         id:
           type: string
           example: "12"
-        number_plate:
+        numberPlate:
           type: string
           example: "ABC1234"
+        busId:
+          type: string
+          example: "BUS123"
+        availableSeats:
+          type: integer
+          example: 50
         capacity:
           type: integer
           example: 50
-        assigned_driver_id:
-          type: integer
-          example: 1
-        assigned_conductor_id:
-          type: integer
-          example: 1
-        bus_id:
-          type: string
-          example: "BUS123"
-        route_id:
-          type: integer
-          example: 1
-        available_seats:
-          type: integer
-          example: 50
+        route:
+          $ref: '#/components/schemas/Route'
+        assignedDriver:
+          $ref: '#/components/schemas/User'
+        assignedConductor:
+          $ref: '#/components/schemas/User'
+        
 
     BusCreateRequest:
       type: object
-      required:
-        - number_plate
-        - capacity
-        - assigned_driver_id
-        - assigned_conductor_id
-        - route_id
       properties:
-        number_plate:
+        numberPlate:
           type: string
           example: "ABC1234"
         capacity:
           type: integer
           example: 50
-        assigned_driver_id:
+        routeId:
           type: integer
           example: 1
-        assigned_conductor_id:
+        assignedDriverId:
           type: integer
           example: 1
-        route_id:
+        assignedConductorId:
           type: integer
           example: 1
-
-    
-    Seat:
-      type: object
-      properties:
-        id:
-          type: integer
-          example: 1
-        bus_id:
-          type: integer
-          example: 12
-        seat_integer:
-          type: string
-          example: "1A"
-        status:
-          type: string
-          enum:
-             - AVAILABLE
-             - RESERVED
-             - TAKEN
-          example: AVAILABLE
     
     Location:
       type: object
@@ -1616,13 +1587,6 @@ components:
             data:
               $ref: '#/components/schemas/Bus'
 
-    SeatResponse:
-      allOf:
-        - $ref: '#/components/schemas/ApiResponse'
-        - type: object
-          properties:
-            data:
-              $ref: '#/components/schemas/Seat'
 
     LocationResponse:
       allOf:
