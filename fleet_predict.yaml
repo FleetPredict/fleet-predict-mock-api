@@ -1289,9 +1289,6 @@ components:
         busId:
           type: string
           example: "BUS123"
-        availableSeats:
-          type: integer
-          example: 50
         capacity:
           type: integer
           example: 50
