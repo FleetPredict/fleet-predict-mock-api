@@ -1295,8 +1295,6 @@ components:
         capacity:
           type: integer
           example: 50
-        route:
-          $ref: '#/components/schemas/Route'
         assignedDriver:
           $ref: '#/components/schemas/User'
         assignedConductor:
@@ -1312,9 +1310,6 @@ components:
         capacity:
           type: integer
           example: 50
-        routeId:
-          type: integer
-          example: 1
         assignedDriverId:
           type: integer
           example: 1
