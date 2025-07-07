@@ -955,14 +955,36 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 
+# Ticket Management
 
+  /ticket-management/reserve:
+    post:
+      summary: Create a new ticket reservation
+      tags: [TicketManagement]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TicketManagementCreateRequest'
+      responses:
+        "200":
+          description: Ticket reservation created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TicketManagementResponse'
+        "400":
+          description: Invalid request payload
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 
-
-
-  /ticket-reservations:
+  /ticket-management/scan/{wallet_id}:             
     get:
-      summary: Get all ticket reservations
-      tags: [TicketReservation]
+      summary: Get all ticket for the wallet
+      tags: [TicketManagement]
       responses:
         "200":
           description: List of ticket reservations
@@ -976,7 +998,7 @@ paths:
                       data:
                         type: array
                         items:
-                          $ref: '#/components/schemas/TicketReservation'
+                          $ref: '#/components/schemas/TicketManagement'
         "400":
           description: Bad request
           content:
@@ -984,33 +1006,58 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 
-    post:
-      summary: Create a new ticket reservation
-      tags: [TicketReservation]
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/TicketReservationCreateRequest'
+  /ticket-management/board/{id}:
+    put:
+      summary: Board a passenger by ticket reservation ID, Note that the ticketStatus is BOARDED
+      tags: [TicketManagement]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
       responses:
         "200":
-          description: Ticket reservation created
+          description: Ticket successfully boarded
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TicketReservationResponse'
+                $ref: '#/components/schemas/TicketManagementResponse'
         "400":
-          description: Invalid request payload
+          description: Invalid ticket reservation ID
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 
-  /ticket-reservations/{id}:
+  /ticket-management/cancel/{id}:
+    put:
+      summary: Cancel a  ticket reservation ID, Note that the ticketStatus is CANCELLED
+      tags: [TicketManagement]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Ticket successfully boarded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TicketManagementResponse'
+        "400":
+          description: Invalid ticket reservation ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /ticket-management/{id}:
     get:
       summary: Get a ticket reservation by ID
-      tags: [TicketReservation]
+      tags: [TicketManagement]
       parameters:
         - in: path
           name: id
@@ -1023,7 +1070,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TicketReservationResponse'
+                $ref: '#/components/schemas/TicketManagementResponse'
         "400":
           description: Invalid reservation ID
           content:
@@ -1031,38 +1078,41 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 
-    put:
-      summary: Update a ticket reservation
-      tags: [TicketReservation]
+  /ticket-management/status/{status}:
+    get:
+      summary: Get a tickets by status
+      tags: [TicketManagement]
       parameters:
         - in: path
           name: id
           required: true
           schema:
             type: integer
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/TicketReservatinEditRequest'
       responses:
         "200":
-          description: Ticket reservation updated
+          description: List of ticket reservations by status
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TicketReservationResponse'
+                allOf:
+                  - $ref: '#/components/schemas/ApiResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/TicketManagement'
         "400":
-          description: Invalid input or ID
+          description: Invalid reservation ID
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 
-    delete:
-      summary: Delete a ticket reservation
-      tags: [TicketReservation]
+  /ticket-management/passenger/{id}:
+    get:
+      summary: Get a tickets by passenger id
+      tags: [TicketManagement]
       parameters:
         - in: path
           name: id
@@ -1071,17 +1121,51 @@ paths:
             type: integer
       responses:
         "200":
-          description: Ticket reservation deleted
+          description: List of tickets for passengers
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DeleteResponse'
+                allOf:
+                  - $ref: '#/components/schemas/ApiResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/TicketManagement'
         "400":
-          description: Invalid ID
+          description: Invalid reservation ID
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+
+  /ticket-management/trip/{id}/cancel:
+    put:
+      summary: Cancel a ticket reservation by ID, Note that the actual responses Returns null
+      tags: [TicketManagement]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+
+      responses:
+        "200":
+          description: Tickets Cancelled successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        "400":
+          description: Invalid request payload
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  
 
   /general-wallet:
     get:
@@ -1503,47 +1587,44 @@ components:
           type: string
           example: "Top-up transaction"
     
-    TicketReservation:
+    TicketManagement:
       type: object
       properties:
         id:
           type: integer
           example: 1
-        profile_id:
+        passengerId:
           type: integer
           example: 1
-        bus_id:
+        tripId:
           type: integer
           example: 12
-        route_id:
-          type: integer
-          example: 1
-        status:
+        ticketStatus:
           type: string
           enum:
             - RESERVED
             - BOARDED
             - CANCELLED
           example: "RESERVED"
-        timestamp:
+        reservationDate:
           type: string
           format: date-time
           example: "2023-10-01T12:00:00Z"
-
-    TicketReservationCreateRequest:
-      type: object
-      required:
-        - profile_id
-        - bus_id
-        - route_id
-      properties:
-        profile_id:
+        boardedAt:
+          type: string
+          format: date-time
+          example: null
+        seatNumber:
           type: integer
-          example: 1
-        bus_id:
+          example: 4
+
+    TicketManagementCreateRequest:
+      type: object
+      properties:
+        tripId:
           type: integer
           example: 12
-        route_id:
+        passengerId:
           type: integer
           example: 1
 
@@ -1707,13 +1788,13 @@ components:
             data:
               $ref: '#/components/schemas/TransactionLedger'
 
-    TicketReservationResponse:
+    TicketManagementResponse:
       allOf:
         - $ref: '#/components/schemas/ApiResponse'
         - type: object
           properties:
             data:
-              $ref: '#/components/schemas/TicketReservation'
+              $ref: '#/components/schemas/TicketManagement'
 
     CompanyAccountResponse:
       allOf:
