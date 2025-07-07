@@ -1194,9 +1194,6 @@ components:
         email:
           type: string
           example: "chimwesofaith@gmail.com"
-        password:
-          type: string
-          example: "password123"
         role:
           type: string
           enum:
@@ -1205,7 +1202,7 @@ components:
             - CONDUCTOR
             - PASSENGER
           example: "ADMIN"
-        status:
+        userStatus:
           type: string
           enum:
             - ACTIVE
@@ -1323,14 +1320,14 @@ components:
         name:
           type: string
           example: "Lusaka"
-        latitude:
-          type: number
-          format: float
-          example: 37.7749
         longitude:
           type: number
           format: float
           example: -122.4194
+        latitude:
+          type: number
+          format: float
+          example: 37.7749
         busStationName:
           type: string
           example: "InterCity Bus Station"
@@ -1370,13 +1367,13 @@ components:
         routeName:
           type: string
           example: "Lusaka - Kitwe"
+        duration:
+          type: number
+          example: 34
         distance:
           type: number
           format: float
           example: 100.5
-        duration:
-          type: number
-          example: 34
         fare:
           type: number
           format: float
