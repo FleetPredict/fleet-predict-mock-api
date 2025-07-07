@@ -1142,7 +1142,7 @@ paths:
 
   /ticket-management/trip/{id}/cancel:
     put:
-      summary: Cancel a ticket reservation by ID, Note that the actual responses Returns null
+      summary: Cancel a ticket reservation by trip ID, Note that the actual responses Returns null
       tags: [TicketManagement]
       parameters:
         - in: path
