@@ -1,0 +1,1567 @@
+openapi: 3.0.1
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+- url: http://localhost:5000
+  description: Generated server url
+paths:
+  /trip/{id}/start:
+    put:
+      tags:
+      - trip-controller
+      operationId: startTrip
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseObject"
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseTripStatusResponse"
+  /trip/{id}/complete:
+    put:
+      tags:
+      - trip-controller
+      operationId: completeTrip
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseObject"
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseTripStatusResponse"
+  /trip/{id}/cancel:
+    put:
+      tags:
+      - trip-controller
+      operationId: cancelTrip
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseObject"
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseTripStatusResponse"
+  /ticket-management/trip/{tripId}/cancel-unboarded:
+    put:
+      tags:
+      - ticket-management-controller
+      operationId: cancelUnboardedTickets
+      parameters:
+      - name: tripId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseObject"
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseString"
+  /ticket-management/cancel/{ticketId}:
+    put:
+      tags:
+      - ticket-management-controller
+      operationId: cancelTicket
+      parameters:
+      - name: ticketId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseObject"
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseTicketResponse"
+  /ticket-management/board/{ticketId}:
+    put:
+      tags:
+      - ticket-management-controller
+      operationId: boardPassenger
+      parameters:
+      - name: ticketId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseObject"
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseTicketResponse"
+  /location/{id}:
+    get:
+      tags:
+      - location-controller
+      operationId: getLocationById
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseObject"
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseLocation"
+    put:
+      tags:
+      - location-controller
+      operationId: updateLocation
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Location"
+        required: true
+      responses:
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseObject"
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseLocation"
+    delete:
+      tags:
+      - location-controller
+      operationId: deleteLocation
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseObject"
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseVoid"
+  /bus/{id}:
+    get:
+      tags:
+      - bus-controller
+      operationId: getBusById
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseObject"
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseBus"
+    put:
+      tags:
+      - bus-controller
+      operationId: updateBus
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateBusRequest"
+        required: true
+      responses:
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseObject"
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseBus"
+    delete:
+      tags:
+      - bus-controller
+      operationId: deleteBus
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseObject"
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseVoid"
+  /trip:
+    get:
+      tags:
+      - trip-controller
+      operationId: getAllTrips
+      responses:
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseObject"
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseListTripResponse"
+    post:
+      tags:
+      - trip-controller
+      operationId: createTrip
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateTripRequest"
+        required: true
+      responses:
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseObject"
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseTripResponse"
+  /ticket-management/reserve:
+    post:
+      tags:
+      - ticket-management-controller
+      operationId: reserveTicket
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ReserveTicketRequest"
+        required: true
+      responses:
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseObject"
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseTicketResponse"
+  /system-user:
+    get:
+      tags:
+      - user-controller
+      operationId: getAllSystemUsers
+      responses:
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseObject"
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseListUser"
+    post:
+      tags:
+      - user-controller
+      operationId: createSystemUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateSystemUserRequest"
+        required: true
+      responses:
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseObject"
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseUser"
+  /route:
+    get:
+      tags:
+      - route-controller
+      operationId: getAllRoutes
+      responses:
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseObject"
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseListRoute"
+    post:
+      tags:
+      - route-controller
+      operationId: createRoute
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateRouteRequest"
+        required: true
+      responses:
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseObject"
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseRoute"
+  /passenger/register:
+    post:
+      tags:
+      - profile-controller
+      operationId: registerPassenger
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PassengerRegistrationRequest"
+        required: true
+      responses:
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseObject"
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseProfile"
+  /location:
+    get:
+      tags:
+      - location-controller
+      operationId: getAllLocations
+      responses:
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseObject"
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseListLocation"
+    post:
+      tags:
+      - location-controller
+      operationId: createLocation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Location"
+        required: true
+      responses:
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseObject"
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseLocation"
+  /bus:
+    get:
+      tags:
+      - bus-controller
+      operationId: getAllBuses
+      responses:
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseObject"
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseListBus"
+    post:
+      tags:
+      - bus-controller
+      operationId: createBus
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateBusRequest"
+        required: true
+      responses:
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseObject"
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseBus"
+  /wallets:
+    get:
+      tags:
+      - wallet-controller
+      operationId: getAllWallets
+      responses:
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseObject"
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseListWallet"
+  /wallets/{id}:
+    get:
+      tags:
+      - wallet-controller
+      operationId: getWalletById
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseObject"
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseWallet"
+  /wallets/username/{username}:
+    get:
+      tags:
+      - wallet-controller
+      operationId: getWalletByUsername
+      parameters:
+      - name: username
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseObject"
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseWallet"
+  /trip/{id}:
+    get:
+      tags:
+      - trip-controller
+      operationId: getTripById
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseObject"
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseTripResponse"
+  /transactions:
+    get:
+      tags:
+      - transaction-ledger-controller
+      operationId: getAll
+      responses:
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseObject"
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseListTransactionLedgerResponse"
+  /transactions/{id}:
+    get:
+      tags:
+      - transaction-ledger-controller
+      operationId: getById
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseObject"
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseTransactionLedgerResponse"
+  /ticket-management/{id}:
+    get:
+      tags:
+      - ticket-management-controller
+      operationId: getTicketById
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseObject"
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseTicketResponse"
+  /ticket-management/status/{status}:
+    get:
+      tags:
+      - ticket-management-controller
+      operationId: getTicketsByStatus
+      parameters:
+      - name: status
+        in: path
+        required: true
+        schema:
+          type: string
+          enum:
+          - RESERVED
+          - BOARDED
+          - CANCELLED
+      responses:
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseObject"
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseListTicketResponse"
+  /ticket-management/scan/{walletId}:
+    get:
+      tags:
+      - ticket-management-controller
+      operationId: scanPassengerTickets
+      parameters:
+      - name: walletId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseObject"
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseListTicketResponse"
+  /ticket-management/passenger/{profileId}:
+    get:
+      tags:
+      - ticket-management-controller
+      operationId: getTicketsByPassenger
+      parameters:
+      - name: profileId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseObject"
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseListTicketResponse"
+  /system-user/{id}:
+    get:
+      tags:
+      - user-controller
+      operationId: getUserById
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseObject"
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseUser"
+  /system-user/role/{role}:
+    get:
+      tags:
+      - user-controller
+      operationId: getUsersByRole
+      parameters:
+      - name: role
+        in: path
+        required: true
+        schema:
+          type: string
+          enum:
+          - ADMIN
+          - DRIVER
+          - CONDUCTOR
+          - PASSENGER
+      responses:
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseObject"
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseListUser"
+  /route/{id}:
+    get:
+      tags:
+      - route-controller
+      operationId: getRouteById
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseObject"
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseRoute"
+    delete:
+      tags:
+      - route-controller
+      operationId: deleteRoute
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseObject"
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseVoid"
+  /passenger:
+    get:
+      tags:
+      - profile-controller
+      operationId: getAllProfiles
+      responses:
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseObject"
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseListProfile"
+  /passenger/{id}:
+    get:
+      tags:
+      - profile-controller
+      operationId: getProfileById
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseObject"
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseProfile"
+  /passenger/user/{userId}:
+    get:
+      tags:
+      - profile-controller
+      operationId: getProfileByUserId
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseObject"
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseProfile"
+  /passenger/find/{username}:
+    get:
+      tags:
+      - profile-controller
+      operationId: getByUsername
+      parameters:
+      - name: username
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseObject"
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseProfile"
+  /general-wallet:
+    get:
+      tags:
+      - general-wallet-controller
+      operationId: getWallet
+      responses:
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseObject"
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApiResponseGeneralWallet"
+components:
+  schemas:
+    ApiResponseObject:
+      type: object
+      properties:
+        customStatus:
+          type: integer
+          format: int32
+        message:
+          type: string
+        data: {}
+    ApiResponseTripStatusResponse:
+      type: object
+      properties:
+        customStatus:
+          type: integer
+          format: int32
+        message:
+          type: string
+        data:
+          $ref: "#/components/schemas/TripStatusResponse"
+    TripStatusResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        tripStatus:
+          type: string
+    ApiResponseString:
+      type: object
+      properties:
+        customStatus:
+          type: integer
+          format: int32
+        message:
+          type: string
+        data:
+          type: string
+    ApiResponseTicketResponse:
+      type: object
+      properties:
+        customStatus:
+          type: integer
+          format: int32
+        message:
+          type: string
+        data:
+          $ref: "#/components/schemas/TicketResponse"
+    TicketResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        passengerId:
+          type: integer
+          format: int64
+        tripId:
+          type: integer
+          format: int64
+        ticketStatus:
+          type: string
+        reservationDate:
+          type: string
+          format: date-time
+        boardedAt:
+          type: string
+          format: date-time
+        seatNumber:
+          type: integer
+          format: int32
+    Location:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        longitude:
+          type: number
+          format: float
+        latitude:
+          type: number
+          format: float
+        busStationName:
+          type: string
+    ApiResponseLocation:
+      type: object
+      properties:
+        customStatus:
+          type: integer
+          format: int32
+        message:
+          type: string
+        data:
+          $ref: "#/components/schemas/Location"
+    CreateBusRequest:
+      type: object
+      properties:
+        numberPlate:
+          type: string
+        capacity:
+          type: integer
+          format: int32
+        assignedDriverId:
+          type: integer
+          format: int64
+        assignedConductorId:
+          type: integer
+          format: int64
+    ApiResponseBus:
+      type: object
+      properties:
+        customStatus:
+          type: integer
+          format: int32
+        message:
+          type: string
+        data:
+          $ref: "#/components/schemas/Bus"
+    Bus:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        numberPlate:
+          type: string
+        busId:
+          type: string
+        capacity:
+          type: integer
+          format: int32
+        assignedDriver:
+          $ref: "#/components/schemas/User"
+        assignedConductor:
+          $ref: "#/components/schemas/User"
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        firstName:
+          type: string
+        lastName:
+          type: string
+        username:
+          type: string
+        email:
+          type: string
+        role:
+          type: string
+          enum:
+          - ADMIN
+          - DRIVER
+          - CONDUCTOR
+          - PASSENGER
+        userStatus:
+          type: string
+          enum:
+          - ACTIVE
+          - INACTIVE
+          - PENDING_PASSWORD_UPDATE
+    CreateTripRequest:
+      type: object
+      properties:
+        bus:
+          type: integer
+          format: int64
+        route:
+          type: integer
+          format: int64
+        departureTime:
+          type: string
+    ApiResponseTripResponse:
+      type: object
+      properties:
+        customStatus:
+          type: integer
+          format: int32
+        message:
+          type: string
+        data:
+          $ref: "#/components/schemas/TripResponse"
+    TripResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        busId:
+          type: integer
+          format: int64
+        routeId:
+          type: integer
+          format: int64
+        departureTime:
+          type: string
+          format: date-time
+        actualDepartureTime:
+          type: string
+          format: date-time
+        arrivalTime:
+          type: string
+          format: date-time
+        tripStatus:
+          type: string
+        availableSeats:
+          type: integer
+          format: int32
+    ReserveTicketRequest:
+      type: object
+      properties:
+        tripId:
+          type: integer
+          format: int64
+        profileId:
+          type: integer
+          format: int64
+    CreateSystemUserRequest:
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        username:
+          type: string
+        email:
+          type: string
+        role:
+          type: string
+          enum:
+          - ADMIN
+          - DRIVER
+          - CONDUCTOR
+          - PASSENGER
+    ApiResponseUser:
+      type: object
+      properties:
+        customStatus:
+          type: integer
+          format: int32
+        message:
+          type: string
+        data:
+          $ref: "#/components/schemas/User"
+    CreateRouteRequest:
+      type: object
+      properties:
+        startLocationId:
+          type: integer
+          format: int64
+        endLocationId:
+          type: integer
+          format: int64
+    ApiResponseRoute:
+      type: object
+      properties:
+        customStatus:
+          type: integer
+          format: int32
+        message:
+          type: string
+        data:
+          $ref: "#/components/schemas/Route"
+    Route:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        startLocation:
+          $ref: "#/components/schemas/Location"
+        endLocation:
+          $ref: "#/components/schemas/Location"
+        routeName:
+          type: string
+        duration:
+          type: integer
+          format: int32
+        distance:
+          type: number
+          format: float
+        fair:
+          type: number
+          format: float
+    PassengerRegistrationRequest:
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        username:
+          type: string
+        password:
+          type: string
+        phoneNumber:
+          type: string
+        address:
+          type: string
+        dateOfBirth:
+          type: string
+          format: date
+        idType:
+          type: string
+          enum:
+          - NRC
+          - PASSPORT
+          - DRIVERS_LICENSE
+        idValue:
+          type: string
+    ApiResponseProfile:
+      type: object
+      properties:
+        customStatus:
+          type: integer
+          format: int32
+        message:
+          type: string
+        data:
+          $ref: "#/components/schemas/Profile"
+    Profile:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        user:
+          $ref: "#/components/schemas/User"
+        phoneNumber:
+          type: string
+        address:
+          type: string
+        dateOfBirth:
+          type: string
+          format: date
+        idType:
+          type: string
+          enum:
+          - NRC
+          - PASSPORT
+          - DRIVERS_LICENSE
+        idValue:
+          type: string
+        wallet:
+          $ref: "#/components/schemas/Wallet"
+    Wallet:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        profile:
+          $ref: "#/components/schemas/Profile"
+        availableBalance:
+          type: number
+        currency:
+          type: string
+          enum:
+          - ZMW
+        accountNumber:
+          type: string
+    ApiResponseListWallet:
+      type: object
+      properties:
+        customStatus:
+          type: integer
+          format: int32
+        message:
+          type: string
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/Wallet"
+    ApiResponseWallet:
+      type: object
+      properties:
+        customStatus:
+          type: integer
+          format: int32
+        message:
+          type: string
+        data:
+          $ref: "#/components/schemas/Wallet"
+    ApiResponseListTripResponse:
+      type: object
+      properties:
+        customStatus:
+          type: integer
+          format: int32
+        message:
+          type: string
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/TripResponse"
+    ApiResponseListTransactionLedgerResponse:
+      type: object
+      properties:
+        customStatus:
+          type: integer
+          format: int32
+        message:
+          type: string
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/TransactionLedgerResponse"
+    TransactionLedgerResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        walletId:
+          type: integer
+          format: int64
+        transactionType:
+          type: string
+        timestamp:
+          type: string
+        amount:
+          type: number
+        reference:
+          type: string
+        narration:
+          type: string
+    ApiResponseTransactionLedgerResponse:
+      type: object
+      properties:
+        customStatus:
+          type: integer
+          format: int32
+        message:
+          type: string
+        data:
+          $ref: "#/components/schemas/TransactionLedgerResponse"
+    ApiResponseListTicketResponse:
+      type: object
+      properties:
+        customStatus:
+          type: integer
+          format: int32
+        message:
+          type: string
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/TicketResponse"
+    ApiResponseListUser:
+      type: object
+      properties:
+        customStatus:
+          type: integer
+          format: int32
+        message:
+          type: string
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/User"
+    ApiResponseListRoute:
+      type: object
+      properties:
+        customStatus:
+          type: integer
+          format: int32
+        message:
+          type: string
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/Route"
+    ApiResponseListProfile:
+      type: object
+      properties:
+        customStatus:
+          type: integer
+          format: int32
+        message:
+          type: string
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/Profile"
+    ApiResponseListLocation:
+      type: object
+      properties:
+        customStatus:
+          type: integer
+          format: int32
+        message:
+          type: string
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/Location"
+    ApiResponseGeneralWallet:
+      type: object
+      properties:
+        customStatus:
+          type: integer
+          format: int32
+        message:
+          type: string
+        data:
+          $ref: "#/components/schemas/GeneralWallet"
+    GeneralWallet:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        currentBalance:
+          type: number
+        lastKnownBankBalance:
+          type: number
+        lastUpdated:
+          type: string
+          format: date-time
+    ApiResponseListBus:
+      type: object
+      properties:
+        customStatus:
+          type: integer
+          format: int32
+        message:
+          type: string
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/Bus"
+    ApiResponseVoid:
+      type: object
+      properties:
+        customStatus:
+          type: integer
+          format: int32
+        message:
+          type: string
+        data: {}

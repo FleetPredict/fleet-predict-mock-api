@@ -84,7 +84,7 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 
 
-  /user:
+  /system-user:
     get:
       summary: Retrieve all users
       tags: [User]
@@ -121,7 +121,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/User'
+              $ref: '#/components/schemas/UserRequest'
       responses:
         "200":
           description: User created successfully
@@ -136,7 +136,37 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 
-  /user/{id}:
+  /system-user/role/{role}:
+    get:
+      summary: Retrieve all users with the same role
+      tags: [User]
+      responses:
+        "200":
+          description: List of users retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  customStatus:
+                    type: integer
+                    example: 1200
+                  message:
+                    type: string
+                    example: "User list retrieved successfully"
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/User'
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+
+  /system-user/{id}:
     get:
       summary: Retrieve a user by ID
       tags: [User]
@@ -160,65 +190,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 
-    put:
-      summary: Update a user by ID
-      tags: [User]
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: integer
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/User'
-      responses:
-        "200":
-          description: User updated successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UserResponse'
-        "400":
-          description: Invalid input
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
 
-    delete:
-      summary: Delete a user by ID
-      tags: [User]
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: integer
-      responses:
-        "200":
-          description: User deleted successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DeleteResponse'
-        "400":
-          description: Invalid ID supplied
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-
-  /profile:
+  /passenger:
     description: >
       This endpoint allows you to manage user profiles. These are Users with a role of 
       PASSENGER only!
     get:
       summary: Retrieve all profiles
-      tags: [Profile]
+      tags: [Passenger]
       responses:
         "200":
           description: List of profiles retrieved successfully
@@ -244,15 +223,16 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 
+  /passenger/register:
     post:
-      summary: Create a new profile
-      tags: [Profile]
+      summary: Register a passenger
+      tags: [Passenger]
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Profile'
+              $ref: '#/components/schemas/ProfileRequest'
       responses:
         "200":
           description: Profile created successfully
@@ -267,10 +247,56 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 
-  /profile/{id}:
+  /passenger/{id}:
     get:
       summary: Retrieve a profile by ID
-      tags: [Profile]
+      tags: [Passenger]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Profile retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProfileResponse'
+        "400":
+          description: Invalid ID supplied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /passenger/user/{id}:
+    get:
+      summary: Retrieve a profile by User ID
+      tags: [Passenger]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Profile retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProfileResponse'
+        "400":
+          description: Invalid ID supplied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /passenger/find/{id}:
+    get:
+      summary: Retrieve a profile by User ID
+      tags: [Passenger]
       parameters:
         - in: path
           name: id
@@ -291,59 +317,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 
-    put:
-      summary: Update a profile by ID
-      tags: [Profile]
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: integer
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Profile'
-      responses:
-        "200":
-          description: Profile updated successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ProfileResponse'
-        "400":
-          description: Invalid input
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
 
-    delete:
-      summary: Delete a profile by ID
-      tags: [Profile]
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: integer
-      responses:
-        "200":
-          description: Profile deleted successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DeleteResponse'
-        "400":
-          description: Invalid ID supplied
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-
-  /wallet:
+  /wallets:
     get:
       summary: Retrieve all wallets
       tags: [Wallet]
@@ -372,30 +347,31 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 
-    post:
-      summary: Create a new wallet
+
+  /wallets/{id}:
+    get:
+      summary: Retrieve a wallet by ID
       tags: [Wallet]
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Wallet'
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
       responses:
         "200":
-          description: Wallet created successfully
+          description: Wallet retrieved successfully
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/WalletResponse'
         "400":
-          description: Invalid input
+          description: Invalid ID supplied
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-
-  /wallet/{id}:
+  /wallets/username/{username}:
     get:
       summary: Retrieve a wallet by ID
       tags: [Wallet]
@@ -419,58 +395,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 
-    put:
-      summary: Update a wallet by ID
-      tags: [Wallet]
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: integer
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Wallet'
-      responses:
-        "200":
-          description: Wallet updated successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/WalletResponse'
-        "400":
-          description: Invalid input
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-
-    delete:
-      summary: Delete a wallet by ID
-      tags: [Wallet]
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: integer
-      responses:
-        "200":
-          description: Wallet deleted successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DeleteResponse'
-        "400":
-          description: Invalid ID supplied
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-
+  
   /bus:
     get:
       summary: Get list of all buses
@@ -828,6 +753,153 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+  
+  /trip:
+    get:
+      summary: Get all trips
+      tags: [Trip]
+      responses:
+        "200":
+          description: List of trips retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  customStatus:
+                    type: integer
+                    example: 1200
+                  message:
+                    type: string
+                    example: "Trip list retrieved successfully"
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/TripResponse'
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    post:
+      summary: Create a new trip
+      tags: [Trip]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TripRequest'
+      responses:
+        "201":
+          description: Trip created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TripResponse'
+        "400":
+          description: Invalid trip data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /trip/{id}:
+    get:
+      summary: Get a trip by ID
+      tags: [Trip]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Trip retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TripResponse'
+        "400":
+          description: Invalid trip ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /trip/{id}/start:
+    put:
+      summary: Start a trip by ID
+      tags: [Trip]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Trip started successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TripStatusResponse'
+        "400":
+          description: Invalid trip ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /trip/{id}/cancel:
+    put:
+      summary: Start a trip by ID
+      tags: [Trip]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Trip completely, Note that the tripStatus must be 'CANCELLED'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TripStatusResponse'
+        "400":
+          description: Invalid trip ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /trip/{id}/complete:
+    put:
+      summary: Start a trip by ID
+      tags: [Trip]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Trip completely, Note that the tripStatus must be 'COMPLETED'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TripStatusResponse'
+        "400":
+          description: Invalid trip ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 
   /transaction-ledger:
     get:
@@ -858,28 +930,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 
-    post:
-      summary: Create a new payment transaction
-      tags: [TransactionLedger]
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/TransactionLedger'
-      responses:
-        "200":
-          description: Payment transaction created successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TransactionLedgerResponse'
-        "400":
-          description: Invalid input
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
 
   /transaction-ledger/{id}:
     get:
@@ -905,57 +955,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 
-    put:
-      summary: Update a payment transaction by ID
-      tags: [TransactionLedger]
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: integer
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/TransactionLedger'
-      responses:
-        "200":
-          description: Payment transaction updated successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TransactionLedgerResponse'
-        "400":
-          description: Invalid input
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
 
-    delete:
-      summary: Delete a payment transaction by ID
-      tags: [TransactionLedger]
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: integer
-      responses:
-        "200":
-          description: Payment transaction deleted successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DeleteResponse'
-        "400":
-          description: Invalid ID supplied
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
+
+
 
   /ticket-reservations:
     get:
@@ -1081,7 +1083,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 
-  /company-accounts/{id}:
+  /general-wallet:
     get:
       summary: Get a company account by ID
       tags: [CompanyAccount]
@@ -1100,35 +1102,6 @@ paths:
                 $ref: '#/components/schemas/CompanyAccountResponse'
         "400":
           description: Invalid account ID
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-
-    put:
-      summary: Update a company account
-      tags: [CompanyAccount]
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: integer
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CompanyAccount'
-      responses:
-        "200":
-          description: Company account updated
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CompanyAccountResponse'
-        "400":
-          description: Invalid input or account ID
           content:
             application/json:
               schema:
@@ -1191,6 +1164,9 @@ components:
         lastName:
           type: string
           example: "Faith"
+        username:
+          type: string
+          example: "chimwesofaith"
         email:
           type: string
           example: "chimwesofaith@gmail.com"
@@ -1207,7 +1183,32 @@ components:
           enum:
             - ACTIVE
             - INACTIVE
+            - PENDING_PASSWORD_UPDATE
           example: "ACTIVE"
+    
+    UserRequest:
+      type: object
+      properties:
+        firstName:
+          type: string
+          example: Chimweso
+        lastName:
+          type: string
+          example: "Faith"
+        username:
+          type: string
+          example: "chimwesofaith"
+        email:
+          type: string
+          example: "chimwesofaith@gmail.com"
+        role:
+          type: string
+          enum:
+            - ADMIN
+            - DRIVER
+            - CONDUCTOR
+          example: "DRIVER"
+  
     
     Profile:
       type: object
@@ -1215,34 +1216,60 @@ components:
         id:
           type: integer
           example: 1
-        user_id:
-          type: integer
-          example: 1
-        profile_picture:
-          type: string
-          example: "https://example.com/profile.jpg"
+        user:
+          $ref: '#/components/schemas/User'
         phone_number:
           type: string
           example: "+260123456789"
         address:
           type: string
           example: "123 Main St, Lusaka, Zambia"
-        date_of_birth:
+        dateOfBirth:
           type: string
           format: date
           example: "1990-01-01"
-        wallet_id:
-          type: integer
-          example: 1
-        id_value:
+        wallet:
+          $ref: '#/components/schemas/Wallet'
+        
+
+    ProfileRequest:
+      type: object
+      properties:
+        firstName:
+          type: string
+          example: "Chimweso"
+        lastName:
+          type: string
+          example: "Faith"
+        email:
+          type: string
+          example: "chimwesofaith@gmail.com"
+        username:
+          type: string
+          example: "chimwesofaith"
+        password:
+          type: string
+          example: "password123"
+        phoneNumber:
+          type: string
+          example: "+260123456789"
+        address:
+          type: string
+          example: "123 Main St, Lusaka, Zambia"
+        dateOfBirth:
+          type: string
+          format: date
+          example: "1990-01-01"
+        idType:
+          type: string
+          enum:
+            - NRC
+            - PASSPORT
+            - DRIVER_LICENSE
+          example: "NRC"
+        idValue:
           type: string
           example: "667923/12/1"
-        id_front_image:
-          type: string
-          example: "https://example.com/id_front.jpg"
-        id_back_image:
-          type: string
-          example: "https://example.com/id_back.jpg"
       
     Wallet:
       type: object
@@ -1250,29 +1277,16 @@ components:
         id:
           type: integer
           example: 1
-        profile_id:
-          type: integer
-          example: 1
-        old_balance:
-          type: number
-          format: float
-          example: 100.50
-        new_balance:
+        availableBalance:
           type: number
           format: float
           example: 150.75
         currency:
           type: string
           example: "ZMW"
-        status:
+        accountNumber:
           type: string
-          enum:
-            - ACTIVE
-            - INACTIVE
-          example: "ACTIVE"
-        account_number:
-          type: string
-          example: "123456789"
+          example: "1234567WAL-20250704-969189"
 
     Bus:
       type: object
@@ -1289,10 +1303,12 @@ components:
         capacity:
           type: integer
           example: 50
-        assignedDriver:
-          $ref: '#/components/schemas/User'
-        assignedConductor:
-          $ref: '#/components/schemas/User'
+        assignedDriverId:
+          type: integer
+          example: 1
+        assignedConductorId:
+          type: integer
+          example: 2
         
 
     BusCreateRequest:
@@ -1397,23 +1413,75 @@ components:
           type: integer
           example: 2
 
+    Trip:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        busId:
+          type: integer
+          example: 12
+        routeId:
+          type: integer
+          example: 1
+        departureTime:
+          type: string
+          format: date-time
+          example: "2023-10-01T12:00:00Z"
+        actualDepartureTime:
+          type: string
+          format: date-time
+          example: null
+        arrivalTime:
+          type: string
+          format: date-time
+          example: null
+        tripStatus:
+          type: string
+          enum:
+            - SCHEDULED
+            - IN_PROGRESS
+            - COMPLETED
+            - CANCELLED
+          example: "SCHEDULED"
+        availableSeats:
+          type: integer
+          example: 40
+
+    TripRequest:
+      type: object
+      properties:
+        bus:
+          type: integer
+          example: 3
+        route:
+          type: integer
+          example: 3
+        departureTime:
+          type: string
+          example: "2025-07-07T08:30"
+    
+    TripStatus:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        tripStatus:
+          type: string
+          example: "IN_PROGRESS"      
+
     TransactionLedger:
       type: object
       properties:
         id:
           type: integer
           example: 1
-        wallet_id:
+        walletId:
           type: integer
           example: 1
-        amount:
-          type: number
-          format: float
-          example: 100.0
-        currency:
-          type: string
-          example: "ZMW"
-        transaction_type:
+        transactionType:
           type: string
           enum:
             - TOP_UP
@@ -1423,7 +1491,11 @@ components:
         timestamp:
           type: string
           format: date-time
-          example: "2023-10-01T12:00:00Z"
+          example: "2025-07-05T21:30:49.226345"
+        amount:
+          type: number
+          format: float
+          example: 100.0
         reference:
           type: string
           example: "TX123456789"
@@ -1491,23 +1563,17 @@ components:
         id:
           type: integer
           example: 1
-        account_number:
-          type: string
-          example: "123456789"
-        account_name:
-          type: string
-          example: "General Ledger"
-        bank_name: 
-          type: string
-          example: "Zambia National Commercial Bank"
-        old_balance:
+        currentBalance:
           type: number
-          format: float
+          format:  float
           example: 10000.0
-        new_balance:
-          type: number
-          format: float
-          example: 12000.0
+        lastKnownBankBalance:
+          format:  float
+          example: 9000.0
+        lastUpdated: 
+          type: string
+          example: "2025-07-05 17:40"
+    
     
     Register:
       type: object
@@ -1608,7 +1674,7 @@ components:
           properties:
             data:
               $ref: '#/components/schemas/Profile'
-   
+  
     WalletResponse:
       allOf:
         - $ref: '#/components/schemas/ApiResponse'
@@ -1616,7 +1682,23 @@ components:
           properties:
             data:
               $ref: '#/components/schemas/Wallet'
-   
+
+    TripResponse:
+      allOf:
+        - $ref: '#/components/schemas/ApiResponse'
+        - type: object
+          properties:
+            data:
+              $ref: '#/components/schemas/Trip'
+    
+    TripStatusResponse:
+      allOf:
+        - $ref: '#/components/schemas/ApiResponse'
+        - type: object
+          properties:
+            data:
+              $ref: '#/components/schemas/TripStatus'
+
     TransactionLedgerResponse:
       allOf:
         - $ref: '#/components/schemas/ApiResponse'
