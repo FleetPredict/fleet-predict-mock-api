@@ -502,6 +502,35 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+    
+  /bus/user/{id}:
+    get:
+      summary: Get list of all buses by user id
+      tags: [Bus]
+      responses:
+        "200":
+          description: Returns list of buses
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  customStatus:
+                    type: integer
+                    example: 1200
+                  message:
+                    type: string
+                    example: Bus List
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Bus'
+        "400":
+          description: Invalid bus data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 
 
     delete:
@@ -896,6 +925,64 @@ paths:
                 $ref: '#/components/schemas/TripStatusResponse'
         "400":
           description: Invalid trip ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  
+  /trip/user/{id}:
+    get:
+      summary: Get all trips by user ID
+      tags: [Trip]
+      responses:
+        "200":
+          description: List of trips retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  customStatus:
+                    type: integer
+                    example: 1200
+                  message:
+                    type: string
+                    example: "Trip list retrieved successfully"
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/TripResponse'
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /trip/passenger/{id}:
+    get:
+      summary: Get all trips by passeger ID
+      tags: [Trip]
+      responses:
+        "200":
+          description: List of trips retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  customStatus:
+                    type: integer
+                    example: 1200
+                  message:
+                    type: string
+                    example: "Trip list retrieved successfully"
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/TripResponse'
+        "400":
+          description: Bad request
           content:
             application/json:
               schema:
