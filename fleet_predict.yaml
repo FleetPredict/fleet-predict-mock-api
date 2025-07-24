@@ -23,15 +23,21 @@ paths:
       summary: Health check endpoint
       security: []
       description: >-
-        This endpoint allows a user of the FleetPredict Backend Servic to check the
-        outbound transfers service is listening.
+        This endpoint allows a user of the FleetPredict Backend Service to check if the
+        service is listening.
       tags:
         - Health
       responses:
         "200":
-          description: >-
-            Returns empty body if the scheme adapter outbound transfers service
-            is running.
+          description: Returns an ApiResponse with data set to null if the service is running.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+              example:
+                customStatus: 1200
+                message: "OK"
+                data: null
   
   /auth/register:
     post:
