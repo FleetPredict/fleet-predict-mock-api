@@ -30,7 +30,7 @@ if not exist "%OPENAPI_FILE%" (
 
 REM Start Prism
 echo Starting Prism mock server on port %PORT% using "%OPENAPI_FILE%"...
-npx prism mock -p %PORT% "%OPENAPI_FILE%"
+npx prism mock -h 0.0.0.0 -p %PORT% "%OPENAPI_FILE%"
 
 endlocal
 pause

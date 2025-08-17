@@ -1639,11 +1639,11 @@ components:
         longitude:
           type: number
           format: float
-          example: -122.4194
+          example: 28.3228
         latitude:
           type: number
           format: float
-          example: 37.7749
+          example:  -15.4167
         busStationName:
           type: string
           example: "InterCity Bus Station"
@@ -1661,11 +1661,11 @@ components:
         latitude:
           type: number
           format: float
-          example: 37.7749
+          example: -15.4167
         longitude:
           type: number
           format: float
-          example: -122.4194
+          example: 28.3228
         busStationName:
           type: string
           example: "InterCity Bus Station"
